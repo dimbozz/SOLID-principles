@@ -1,0 +1,13 @@
+SOLID-principles/
+├── cmd/
+│   └── main.go
+├── internal/
+│   ├── domain/
+│   │   └── order.go
+│   ├── repository/
+│   │   └── order_repository.go
+│   ├── service/
+│   │   └── order_service.go
+│   └── notification/
+│       └── notification_service.go
+└── go.mod
