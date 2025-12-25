@@ -2,56 +2,14 @@ package main
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
 
-	"SOLID-principles/notification"
-	"SOLID-principles/internal/order"
-    "SOLID-principles/internal/repository"
-    "SOLID-principles/internal/service"
+	"SOLID-principles/internal/notification"
+	"SOLID-principles/internal/repository"
+	"SOLID-principles/internal/service"
 
 	_ "github.com/mattn/go-sqlite3"
 )
-
-type Order struct {
-	ID       int
-	Customer string
-	Products string
-	Total    float64
-	Status   string
-}
-
-type OrderSystem struct {
-	db            *sql.DB
-	notifications *notification.NotificationService
-}
-
-func NewOrderSystem(db *sql.DB) *OrderSystem {
-	return &OrderSystem{
-		db:            db,
-		notifications: notification.NewNotificationService(),
-	}
-}
-
-func (s *OrderSystem) CreateOrder(customer string, products []string, total float64) error {
-	// Создание заказа в БД
-	_, err := s.db.Exec(
-		"INSERT INTO orders (customer, products, total, status) VALUES (?, ?, ?, ?)",
-		customer, fmt.Sprintf("%v", products), total, "pending",
-	)
-	if err != nil {
-		return err
-	}
-
-	// Отправка уведомления
-	s.notifications.SendEmailNotification(customer)
-
-	return nil
-}
-
-func (s *OrderSystem) sendEmailNotification(customer string) {
-	fmt.Printf("Уведомление отправлено клиенту %s\n", customer)
-}
 
 func main() {
 	db, err := sql.Open("sqlite3", "orders.db")
@@ -72,9 +30,15 @@ func main() {
 		log.Fatal(err)
 	}
 
-	system := NewOrderSystem(db)
+	// Dependency Injection через интерфейсы
+	repo := repository.NewSQLiteRepo(db)
+	emailNotifier := notification.NewEmailSender()
+	// smsNotifier := notification.NewSMSSender() // Легко заменить
 
-	err = system.CreateOrder("Иван", []string{"apple", "banana"}, 10.5)
+	// OrderService получает ИНТЕРФЕЙСЫ, а не конкретные реализации
+	orderService := service.NewOrderService(repo, emailNotifier)
+
+	err = orderService.CreateOrder("Иван", []string{"apple", "banana"}, 10.5)
 	if err != nil {
 		log.Fatal(err)
 	}
