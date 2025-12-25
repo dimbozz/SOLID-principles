@@ -1,5 +1,5 @@
 1. Созданы интерфейсы RepositoryWriter и Notifier, которые определяют общие контракты для всех типов баз данных и отправителей уведомлений.
-2. Структура EmailSender реализует интерфейс Notifier. Метод sendEmailNotification переименован его в Send и перенесен в структуру EmailSender.
+2. Структура EmailSender реализует интерфейс Notifier. Метод sendEmailNotification переименован в Send и перенесен в структуру EmailSender.
 Добавьте новую функциональность.
 3. Создана новая структура SMSSender, которая также реализует интерфейс Notifier.
 4. OrderService зависит от интерфейсов RepositoryWriter и Notifier, а не от конкретных реализаций.
