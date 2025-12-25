@@ -33,10 +33,11 @@ func main() {
 	// Dependency Injection через интерфейсы
 	repo := repository.NewSQLiteRepo(db)
 	emailNotifier := notification.NewEmailSender()
-	// smsNotifier := notification.NewSMSSender() // Легко заменить
+	// smsNotifier := notification.NewSMSSender() // Раскомментировать для sms уведомления
 
 	// OrderService получает ИНТЕРФЕЙСЫ, а не конкретные реализации
 	orderService := service.NewOrderService(repo, emailNotifier)
+	// orderService := service.NewOrderService(repo, smsNotifier) // Раскомментировать для sms уведомления
 
 	err = orderService.CreateOrder("Иван", []string{"apple", "banana"}, 10.5)
 	if err != nil {
