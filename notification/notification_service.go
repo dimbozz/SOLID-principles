@@ -1,3 +1,4 @@
+// internal/notification/notification_service.go
 package notification
 
 // NotificationService — только отправка уведомлений

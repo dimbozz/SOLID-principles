@@ -6,6 +6,9 @@ import (
 	"log"
 
 	"SOLID-principles/notification"
+	"SOLID-principles/internal/order"
+    "SOLID-principles/internal/repository"
+    "SOLID-principles/internal/service"
 
 	_ "github.com/mattn/go-sqlite3"
 )

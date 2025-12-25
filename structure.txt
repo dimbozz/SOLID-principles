@@ -2,7 +2,7 @@ SOLID-principles/
 ├── cmd/
 │   └── main.go
 ├── internal/
-│   ├── domain/
+│   ├── order/
 │   │   └── order.go
 │   ├── repository/
 │   │   └── order_repository.go
@@ -10,4 +10,5 @@ SOLID-principles/
 │   │   └── order_service.go
 │   └── notification/
 │       └── notification_service.go
-└── go.mod
+├── go.mod
+└── go.sum
